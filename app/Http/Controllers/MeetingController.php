@@ -81,12 +81,11 @@ class MeetingController extends Controller
      */
     public function show($id)
     {
-        // $meeting = Meeting:with(relations: 'users')->where(users_id,$id)firstOrFail();
-        
-        $meeting = Meeting::with('App\users')->where('id',$id)->firstOrFail();
+        $meeting = Meeting::with('users')->where('id', $id)->firstOrFail();
+        // $meeting = Meeting::with('App\Users')->where('user_id', $id)->firstOrFail();
         $meeting->view_meetings = [
             'href' => 'api/v1/meeting',
-            'method' => 'GET'
+            'method' => 'GET' 
         ];
 
         $response = [
@@ -111,21 +110,21 @@ class MeetingController extends Controller
             $this->validate($request, [
                 'title' => 'required',
                 'description' => 'required',
-                'time' => 'required|date_format:ymdHie',
+                'time' => 'required|date_format:Y/m/d H:i:s',
                 'user_id' => 'required',
             ]);
             $title = $request->input('title');    
-            $descrription = $request->input('descrription');    
+            $description = $request->input('description');    
             $time = $request->input('time');  
             $user_id = $request->input('user_id');    
                 
-            $meeting = Meeting::with(App\users)->findOrFails($id);
+            $meeting = Meeting::with('users')->findOrFail($id);
 if (!$meeting->users()->where('users.id', $user_id)->first()) {
                 return response()->json([['msg' => 'user not registered for meeting, update not succesful'], 'status'=> 401]);
             };
             $meeting-> time = $time;
             $meeting-> title = $title;
-            $meeting-> description = $description;
+            $meeting-> description = $description ;
 
             if(!$meeting->update()){
                 return response()->json([['msg' => 'Eror during update'], 'status'=> 404]);
