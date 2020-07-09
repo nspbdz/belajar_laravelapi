@@ -161,12 +161,13 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        
         /*
-         * Package Service Providers...
-         */
-            // Barryvdh\Cors\ServiceProvider::class,
-            'Tymon\JwtAuth\Providers\LaravelServiceProvider',
+        * Package Service Providers...
+        */ 
+        Fruitcake\Cors\CorsServiceProvider::class,
+        
+        Tymon\JwtAuth\Providers\LaravelServiceProvider::class,
         /*
          * Application Service Providers...
          */

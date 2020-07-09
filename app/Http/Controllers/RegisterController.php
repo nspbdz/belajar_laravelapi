@@ -14,7 +14,7 @@ class RegisterController extends Controller
       public function __construct()
       {
           $this->middleware('jwt.auth');
-      }
+      } 
       // jwtauth
     /**
      * Store a newly created resource in storage.
