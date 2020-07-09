@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use JWTAuth;
+use JWTAuthExceptions;
+use Tymon\JWTAuth\Contracts\JWTSubject as JWTSubject;
+
 use App\User;
+
 class AuthController extends Controller
 {
     public function store(Request $request)
@@ -22,8 +27,32 @@ class AuthController extends Controller
               'email' => $email,
               'password' => bcrypt($password)
           ]);
+            // jwtauth
+          $credentials = [
+              'email' =>$email,
+              'password' =>$password
+          ];
+
+            // jwtauth
 
           if ($user->save()) {
+            // jwtauth
+
+            $token = null;
+            try {
+                if( !$token = JWTAuth::attempt($credentials)) {
+                    return response()->json([[
+                            'msg' => 'Email Or Password are incorrect'],
+                            'status'=> 404, ] );
+                }
+            } catch (JWTAuthException $e ) {
+                return response()->json([[
+                        'msg' => 'failed_to_create_token'],
+                        'status'=> 404, ] );
+            }
+
+            // jwtauth
+
               $user->signin = [
                   'href' => 'api/v1/user/signin',
                   'method' => 'POST',
@@ -31,7 +60,11 @@ class AuthController extends Controller
               ];
                 $response = [
                     'msg' => 'User Created',
-                    'user' => $user
+                    'user' => $user,
+                    // jwtauth
+                    'token' => $token,
+                    // jwtauth
+
                 ];
               return response()->json([ $response,'status'=> 201, ]);
     

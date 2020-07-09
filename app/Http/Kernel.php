@@ -3,7 +3,8 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-
+use JWTAuth;
+use JWTExceptions;
 class Kernel extends HttpKernel
 {
     /**
@@ -42,6 +43,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Barryvdh\Cors\HandleCors::class,
         ],
     ];
 
@@ -53,6 +55,15 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'jwt.auth' => Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+        'jwt.check' => Tymon\JWTAuth\Http\Middleware\Check::class,
+        'jwt.refresh' => Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
+        'jwt.renew' => Tymon\JWTAuth\Http\Middleware\AuthenticateAndRenew::class,
+        'cors' => [
+            \Barryvdh\Cors\HandleCors::class,
+            ],
+        'cors' => \Barryvdh\Cors\HandleCors::class ,
+        'jwt.auth' => \App\Http\Middleware\VerifyJWTToken::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,

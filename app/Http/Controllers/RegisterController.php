@@ -10,6 +10,12 @@ use App\Meeting;
 
 class RegisterController extends Controller
 {
+      // jwtauth
+      public function __construct()
+      {
+          $this->middleware('jwt.auth');
+      }
+      // jwtauth
     /**
      * Store a newly created resource in storage.
      *

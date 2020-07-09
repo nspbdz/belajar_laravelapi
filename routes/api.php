@@ -17,8 +17,14 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+// yang codingan ini milik jwtauth
+// , 'middleware' => 'cors'
+// yang codingan ini milik jwtauth
+// Route::group([ 'middleware' => 'cors'], function () {
+//     ...
+//     });
 
-Route::group(['prefix' => 'v1'], function() {
+Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function() {
     Route::resource('meeting', 'MeetingController', [
             'except' => ['create', 'edit']
     

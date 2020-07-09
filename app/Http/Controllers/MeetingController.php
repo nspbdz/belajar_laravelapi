@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use App\Meeting;
 class MeetingController extends Controller
 {
+    // jwtauth
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+    // jwtauth
+
     /**
      * Display a listing of the resource.
      *
