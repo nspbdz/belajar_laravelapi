@@ -50,17 +50,21 @@ class MeetingController extends Controller
             'description' => 'required',
             'time' => 'required',
             'user_id' => 'required',
+            // 'gambar' => 'required',
         ]);
 
         $title = $request->input('title');
         $description = $request->input('description');
         $time = $request->input('time');
         $user_id = $request->input('user_id');
+        $gambar = $request->input('gambar');
+
 
         $meeting = new Meeting([
             'time' => $time,
             'title' => $title,
             'description' => $description,
+            'gambar' => $gambar
         ]);
 
         if ($meeting->save()) {

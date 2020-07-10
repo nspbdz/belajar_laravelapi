@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/show', function () {
+    return view('show');
+});
+Route::get('/{any}', function () {
+    return view('welcome');
+})->where('any','.*');

@@ -18,6 +18,8 @@ class CreateMeetingsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('time');
+            $table->string('gambar');
+            
             $table->timestamps();
         });
     }
