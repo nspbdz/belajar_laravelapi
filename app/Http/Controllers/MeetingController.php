@@ -21,19 +21,32 @@ class MeetingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $meetings= Meeting::all();  
-        foreach ($meetings as $meeting){
-            $meeting->view_meeting = [
-                'href' => 'api/v1/meeting/' . $meeting->id,
-                'method' => 'GET'
-            ];
-        }     
-        $response = [
+    // {
+    //     $meetings= Meeting::all();  
+    //     foreach ($meetings as $meeting){
+    //         $meeting->view_meeting = [
+    //             'href' => 'api/v1/meeting/' . $meeting->id,
+    //             'method' => 'GET'
+    //         ];
+    //     }     
+        {
+            $meetings= Meeting::all()->toArray();  
+            foreach($meetings as $key => $meeting)
+            {
+               $meetings[$key]['view_meeting']
+            
+            = [
+                    'href' => 'api/v1/meeting/' . $meeting['id'],
+                    'method' => 'GET'
+                ];
+            }     
+            // $response ["men"]=[ 
+            $response = [
             'msg' => 'List of all Meetings',
             'meeting' => $meetings
         ];
-        return response()->json([ $response,'status'=> 201, ]);
+        // 'data'=> $response,
+        return response()->json([ 'meeting' => $meetings ]);
 
     }
 
@@ -57,6 +70,7 @@ class MeetingController extends Controller
         $description = $request->input('description');
         $time = $request->input('time');
         $user_id = $request->input('user_id');
+        
         $gambar = $request->input('gambar');
 
 
